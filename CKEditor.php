@@ -35,6 +35,8 @@ class CKEditor extends InputWidget{
                 $this->presetStandard();
             }elseif($this->editorOptions['preset'] == 'full'){
                 $this->presetFull();
+            }elseif($this->editorOptions['preset'] == 'custom'){
+                $this->presetCustom();
             }
             unset($this->editorOptions['preset']);
         }
@@ -52,6 +54,7 @@ class CKEditor extends InputWidget{
         $options['toolbarGroups'] = [
             ['name' => 'undo'],
             ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+            ['name' => 'paragraph', 'groups' => ['templates', 'list', 'indent', 'align']],
             ['name' => 'colors'],
             ['name' => 'links', 'groups' => ['links', 'insert']],
             ['name' => 'others','groups' => ['others', 'about']],
@@ -109,6 +112,35 @@ class CKEditor extends InputWidget{
             ['name' => 'links', 'groups' => ['links', 'insert']],
             ['name' => 'others'],
         ];
+
+        if($this->_inline){
+            $options['extraPlugins'] = 'sourcedialog';
+            $options['removePlugins'] = 'sourcearea';
+        }
+
+        $this->editorOptions = ArrayHelper::merge($options, $this->editorOptions);
+    }
+
+
+    private function presetCustom(){
+        $options['height'] = 200;
+
+        $options['toolbarGroups'] = [
+            ['name' => 'clipboard', 'groups' => ['mode','undo', 'selection', 'clipboard', 'doctools']],
+            ['name' => 'editing', 'groups' => ['find', 'spellchecker', 'tools', 'about']],
+            '/',
+            ['name' => 'paragraph', 'groups' => ['templates', 'list', 'indent', 'align']],
+            ['name' => 'forms'],
+//            '/',
+            ['name' => 'blocks'],
+            ['name' => 'basicstyles', 'groups' => ['basicstyles', 'colors','cleanup']],
+            ['name' => '', 'groups' => [ '', 'insert' ]],
+            ['name' => 'others'],
+            '/',
+            ['name' => 'styles'],
+
+        ];
+        $options['removeButtons'] = 'Flash,Smiley,SpecialChar,Iframe,PageBreak,Link,Unlink,Anchor,Language,CreateDiv,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Scayt,SelectAll,Find,Replace,Save,NewPage,Preview,Print,About,ShowBlocks,Subscript,Superscript,Templates,Copy,Cut,Paste,PasteText,PasteFromWord';
 
         if($this->_inline){
             $options['extraPlugins'] = 'sourcedialog';
