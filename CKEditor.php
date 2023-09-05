@@ -37,6 +37,8 @@ class CKEditor extends InputWidget{
                 $this->presetFull();
             }elseif($this->editorOptions['preset'] == 'custom'){
                 $this->presetCustom();
+            }elseif($this->editorOptions['preset'] == 'custom-text-p'){
+                $this->presetCustomTextP();
             }
             unset($this->editorOptions['preset']);
         }
@@ -139,6 +141,22 @@ class CKEditor extends InputWidget{
             '/',
             ['name' => 'styles'],
 
+        ];
+        $options['removeButtons'] = 'Flash,Smiley,SpecialChar,Iframe,PageBreak,Link,Unlink,Anchor,Language,CreateDiv,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Scayt,SelectAll,Find,Replace,Save,NewPage,Preview,Print,About,ShowBlocks,Subscript,Superscript,Templates,Copy,Cut,Paste,PasteText,PasteFromWord';
+
+        if($this->_inline){
+            $options['extraPlugins'] = 'sourcedialog';
+            $options['removePlugins'] = 'sourcearea';
+        }
+
+        $this->editorOptions = ArrayHelper::merge($options, $this->editorOptions);
+    }
+
+    private function presetCustomTextP(){
+        $options['height'] = 200;
+
+        $options['toolbarGroups'] = [
+            ['name' => 'clipboard', 'groups' => ['mode','undo', 'selection', 'clipboard', 'doctools']],
         ];
         $options['removeButtons'] = 'Flash,Smiley,SpecialChar,Iframe,PageBreak,Link,Unlink,Anchor,Language,CreateDiv,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Scayt,SelectAll,Find,Replace,Save,NewPage,Preview,Print,About,ShowBlocks,Subscript,Superscript,Templates,Copy,Cut,Paste,PasteText,PasteFromWord';
 
